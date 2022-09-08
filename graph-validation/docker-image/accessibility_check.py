@@ -1,3 +1,16 @@
+# All the existing jobs for Diastema
+existing_jobs = [
+        "dataset",
+        "cleaning",
+        "data-join",
+        "classification",
+        "regression",
+        "clustering",
+        "visualize",
+        "function",
+        "data-sink"
+    ]
+
 # Handle the playbook
 def access_handler(playbook):
     # The jobs of the playbook.

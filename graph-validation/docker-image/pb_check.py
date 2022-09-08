@@ -66,7 +66,7 @@ def playbook_check(playbook):
     jobs = playbook["jobs"]
     for job in jobs:
         if not (job["title"] in existing_jobs):
-            error = "Wrong job title: "+job["title"]+" ("+job["id"]+")"
+            error = "Wrong job title: "+job["title"]+" ("+str(job["id"])+")"
             print("[ERROR]", error)
             return (False, error)
     
@@ -86,7 +86,7 @@ def playbook_check(playbook):
         if not (type(job["from"]) == list):
             if job["from"] == 0:
                 if not (job["title"] in allowed_starting_jobs):
-                    error = "Job not valid as a starting job: "+job["title"]+" ("+job["id"]+")"
+                    error = "Job not valid as a starting job: "+job["title"]+" ("+str(job["id"])+")"
                     print("[ERROR]", error)
                     return (False, error)
 
@@ -104,7 +104,7 @@ def playbook_check(playbook):
     for job in jobs:
         if job["next"] == [0]:
             if not (job["title"] in allowed_ending_jobs):
-                error = "Job not valid as an ending job: "+job["title"]+" ("+job["id"]+")"
+                error = "Job not valid as an ending job: "+job["title"]+" ("+str(job["id"])+")"
                 print("[ERROR]", error)
                 return (False, error)
     
@@ -117,8 +117,12 @@ def playbook_check(playbook):
     
     # Check for cleaning issues
     # not clean --> Join --> not clean
-    # clean --> Reg, Class, Clus --> X
+    # clean --> Reg, Class, Clus --> X (clean)
     # clean --> Function --> not clean
-    ## valid_cleaning = cleaning_handler(playbook)
+    valid_cleaning = cleaning_handler(playbook)
+    if not valid_cleaning:
+        error = "Functions and Regressions need cleaned data. Joins need raw data."
+        print("[ERROR]", error)
+        return (False, error)
 
     return (True, "[INFO] Valid playbook")

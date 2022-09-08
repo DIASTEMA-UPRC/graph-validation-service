@@ -1,0 +1,9 @@
+docker build --tag graph-validation-image .
+
+docker run -p 127.0.0.1:5000:5000 ^
+--name graph-validation-service ^
+--restart always ^
+-e HOST=0.0.0.0 ^
+-e PORT=5000 ^
+-e DIASTEMA_KEY=diastema-key ^
+graph-validation-image
