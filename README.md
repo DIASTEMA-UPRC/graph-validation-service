@@ -1,7 +1,7 @@
 # Graph Validation Service
 
 ## Description
-DIASTEMA uses a service to verify the integrity of the Diastema playbook before it is given to the Orchestration Service for execution [[1]](https://github.com/DIASTEMA-UPRC/orchestrator/blob/main/README.md#references).
+DIASTEMA uses a service to verify the integrity of the Diastema playbook before it is given to the Orchestration Service for execution [[1]](https://github.com/DIASTEMA-UPRC/graph-validation-service/blob/main/README.md#references).
 
 This system receives a JSON graph that mentions in it all the necessary information for the execution of all procedures. This information refers to which jobs should run first before others, what job each one is, various variables, ids, and more.
 
