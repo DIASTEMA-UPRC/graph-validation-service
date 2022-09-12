@@ -1,6 +1,6 @@
 docker build --tag graph-validation-image .
 
-docker run -p 0.0.0.0:5000:5000 \
+docker run -d -p 0.0.0.0:5000:5000 \
 --name graph-validation-service \
 --restart always \
 -e HOST=0.0.0.0 \
