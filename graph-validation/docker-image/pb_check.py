@@ -4,6 +4,7 @@ import os
 # Import custom Functions for jobs
 from accessibility_check import access_handler
 from cleaning_check import cleaning_handler
+from features_check import feature_handler
 
 # Diastema Token Environment Variable
 DIASTEMA_KEY = os.getenv("DIASTEMA_KEY", "diastema-key")
@@ -44,23 +45,28 @@ allowed_ending_jobs = [
     "visualize"
 ]
 
+# Variables for graph validation results
+valid = "valid"
+invalid = "invalid"
+suggested = "suggested"
+
 def playbook_check(playbook):
     # Check if there is a playbook
     if playbook is None:
         print("[ERROR] No Diastema playbook given!")
-        return (False, "No Diastema playbook given!")
+        return (invalid, "No Diastema playbook given!")
     
     # Check if the needed_attributes exist only one time in the playbook
     for attribute in needed_attributes:
         if not (attribute in playbook):
             error = "Missing attribute: "+attribute
             print("[ERROR]", error)
-            return (False, error)
+            return (invalid, error)
 
     # Check if the "diastema-token" is correct
     if playbook["diastema-token"] != DIASTEMA_KEY:
         print("[ERROR] Invalid Diastema Token!")
-        return (False, "Invalid Diastema Token!")
+        return (invalid, "Invalid Diastema Token!")
     
     # Check if all the jobs exist in the playbook
     jobs = playbook["jobs"]
@@ -68,7 +74,7 @@ def playbook_check(playbook):
         if not (job["title"] in existing_jobs):
             error = "Wrong job title: "+job["title"]+" ("+str(job["id"])+")"
             print("[ERROR]", error)
-            return (False, error)
+            return (invalid, error)
     
     # Ckeck if there is at least one starting job
     noStart = True
@@ -79,7 +85,7 @@ def playbook_check(playbook):
     if noStart:
         error = "There is no starting jobs."
         print("[ERROR]", error)
-        return (False, error)
+        return (invalid, error)
     
     # Check if starting jobs are allowed to start the playbook
     for job in jobs:
@@ -88,7 +94,7 @@ def playbook_check(playbook):
                 if not (job["title"] in allowed_starting_jobs):
                     error = "Job not valid as a starting job: "+job["title"]+" ("+str(job["id"])+")"
                     print("[ERROR]", error)
-                    return (False, error)
+                    return (invalid, error)
 
     # Ckeck if there is at least one ending job
     noEnd = True
@@ -98,7 +104,7 @@ def playbook_check(playbook):
     if noEnd:
         error = "There is no ending jobs."
         print("[ERROR]", error)
-        return (False, error)
+        return (invalid, error)
 
     # Check if ending jobs are allowed to end the playbook
     for job in jobs:
@@ -106,23 +112,37 @@ def playbook_check(playbook):
             if not (job["title"] in allowed_ending_jobs):
                 error = "Job not valid as an ending job: "+job["title"]+" ("+str(job["id"])+")"
                 print("[ERROR]", error)
-                return (False, error)
+                return (invalid, error)
     
     # Check if the graph is connected in the right way
     nodes_found = access_handler(playbook)
     if nodes_found != len(jobs):
         error = "There are some jobs that are not accessible!"
         print("[ERROR]", error)
-        return (False, error)
+        return (invalid, error)
     
+    # Use MongoDB to find if the features are making sence
+    feature_validation = feature_handler(playbook)
+    if(feature_validation[0] == invalid):
+        error = feature_validation[1]
+        print("[ERROR]", error)
+        return (invalid, error)
+
     # Check for cleaning issues
     # not clean --> Join --> not clean
     # clean --> Reg, Class, Clus --> X (clean)
     # clean --> Function --> not clean
-    valid_cleaning = cleaning_handler(playbook)
-    if not valid_cleaning:
-        error = "Functions and Regressions need cleaned data. Joins need raw data."
+    cleaning_validation = cleaning_handler(playbook)
+    
+    if(cleaning_validation[0] == invalid):
+        error = cleaning_validation[1]
         print("[ERROR]", error)
-        return (False, error)
+        return (invalid, error)
 
-    return (True, "[INFO] Valid playbook")
+    if(cleaning_validation[0] == suggested):
+        error = cleaning_validation[1]
+        print("[SUGGESTION]", error)
+        return (suggested, error)
+
+    print("[INFO]", "Valid playbook")
+    return (valid, "Valid playbook")

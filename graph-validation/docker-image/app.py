@@ -14,6 +14,11 @@ PORT = int(os.getenv("PORT", 5000))
 # The name of the flask app
 app = Flask(__name__)
 
+# Variables for graph validation results
+valid = "valid"
+invalid = "invalid"
+suggested = "suggested"
+
 """ Flask endpoints """
 # Start The Graph Validation Service Route
 @app.route("/validation", methods=["POST"])
@@ -25,10 +30,12 @@ def function_job():
     # True / False | playbook valid or not
     pb_validity = pbc(json_body)
 
-    # Reurn the status and the reason if the status is 409
-    if(pb_validity[0] == True):
+    # Return the status with the reason
+    if(pb_validity[0] == valid):
         return pb_validity[1], 200
-    else:
+    elif(pb_validity[0] == suggested):
+        return pb_validity[1], 425
+    elif(pb_validity[0] == invalid):
         return pb_validity[1], 409
 
 """ Main """
