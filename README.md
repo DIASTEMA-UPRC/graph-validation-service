@@ -7,6 +7,8 @@ This system receives a JSON graph that mentions in it all the necessary informat
 
 The purpose od this service is to check whether the graph is valid or not for the execution of the Orchestrator. It does this, by accessing all the jobs and attributes of the playbook, while trying to find missing values, non logical links etc.
 
+Two interesting functionalities of the above, is the ability to handle dinamicly witch features of the datasets given are corrent to assist the end-users with friendly messages, as well as the ability to know when a dataset is in need, is suggested, or not to have a cleaning job performed using the Data Verifier Service.
+
 ## Repository Contents
 - graph-validation/docker-image
   - The source code of the Graph Validation Service. It also contains a python virtual environment with all the needed libraries.
@@ -14,9 +16,14 @@ The purpose od this service is to check whether the graph is valid or not for th
   - Some dummy JSONs that are valid. To check how the service is retarning the OK status.
 - graph-validation/dummy/wrong-analyzes/
   - Some dummy JSONs that are not valid. To check how the service is retarning the CONFLICT status.
+- graph-validation/dummy/data-verifier/
+  - A dummy JSON used as an example of the HTTP call's JSON body for the Data Verifier Service given by the Graph Validation Service.
+- graph-validation/dummy-data-verifier/
+  - A dummy Data Verifier Service for testing purposes.
 
-The repository below, contains a Dockerfile, giving the opportunity to use them with Docker if needed.
+The repositories below, contain Dockerfiles, giving the opportunity to use them with Docker if needed.
 - graph-validation/docker-image
+- graph-validation/dummy-data-verifier/
 
 ## Example of use
 In this section, an example of how to use the source code of this repository is shown, using the files from the dummyrepositories.
@@ -26,6 +33,7 @@ Below is an example of prerequisites:
 - Docker
 - Windows OS
 - Postman
+- MongoDB
 
 You can execute the functionality with other prerequisites and commands as well!
 
@@ -47,12 +55,51 @@ docker run -p 127.0.0.1:5000:5000 ^
 -e HOST=0.0.0.0 ^
 -e PORT=5000 ^
 -e DIASTEMA_KEY=diastema-key ^
+-e MONGO_HOST=host.docker.internal ^
+-e MONGO_PORT=27017 ^
+-e DATABASE=UIDB ^
+-e COLLECTION=datasets ^
+-e DATA_VERIFIER_HOST=host.docker.internal ^
+-e DATA_VERIFIER_PORT=5001 ^
 graph-validation-image
 ```
 Now you have activated the service in your Machine.
 
+You should also activate the dummy Service to test the above.
+5. Go to the directory below using a CMD:
+- graph-validation/dummy-data-verifier/
+6. Type the two following commands in the CMD:
+```
+docker build --tag dummy-data-verifier .
+```
+```
+docker run -p 127.0.0.1:5001:5000 ^
+--name dummy-data-verifier-service ^
+--restart always ^
+-e HOST=0.0.0.0 ^
+-e PORT=5000 ^
+dummy-data-verifier
+```
+#### Mongo Dummy Initialization
+7. Use another CMD and type the mongo command
+```
+mongo
+```
+The command above will let you in the mongo shell.
+8. Now initialize two dummy datasets by typing the commands below
+```
+use UIDB
+db.dropDatabase()
+use UIDB
+db.datasets.insert( { "organization": "metis", "user": "panagiotis", "label": "ships", "features" : [ {"name" : "ships-1", "type" : "int", "positive" : "True", "negative" : "False"}, {"name" : "ships-2", "type" : "float", "positive" : "True", "negative" : "False"}, {"name" : "sales", "type" : "bool"} ] } )
+db.datasets.insert( { "organization": "metis", "user": "panagiotis", "label": "boats", "features" : [ {"name" : "boats-1", "type" : "int", "positive" : "True", "negative" : "False"}, {"name" : "boats-2", "type" : "float", "positive" : "True", "negative" : "False"}, {"name" : "sales", "type" : "bool"} ] } )
+cls
+db.datasets.find()
+
+```
+
 #### Usage
-5. Open Postman and execute the following requests:
+9. Open Postman and execute the following requests:
 - Valid Graph:
    - POST
    - URL: http://localhost:5000/validation
@@ -65,10 +112,14 @@ Now you have activated the service in your Machine.
 By executing the above you will get the following with the corresponding meanings:
 - Valid Graph: STATUS 200 OK - Your Graph is valid and ready to be used by the Orchestrator.
 - Not Valid Graph: STATUS 409 CONFLICT - Your Graph is problematic and you can view the TEXT in the body of your response to fix it.
+- Graph Suggestion: STATUS 425 TOO EARLY - Your Graph is not problematic but there is one suggestion given in the TEXT body of the response.
 
 There are many more Dummy JSON bodies that you can use in the following directories:
 - graph-validation/dummy/analyzes
 - graph-validation/dummy/wrong-analyzes/
+
+#### Usage
+If needed, you can change the values in the Docker commands to change hosts, ports, keys as well as the databse and collection used.
 
 ## References
 - [1] https://diastema.gr/
