@@ -103,6 +103,7 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, feature_validity):
                 if(not (feature in features)):
                     feature_validity[0] = invalid
                     feature_validity[1] = "Feature '"+feature+"' does not exist in the features: "+ str(features)
+                    return
                 # Update value to check the next one
                 from_counter += 1
         # New dataset will be the below
@@ -117,14 +118,22 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, feature_validity):
 
         if(not (feature in from_features_1)):
             feature_validity[0] = invalid
-            feature_validity[1] = "Feature '"+feature+"' does not exist in the features: "+ str(from_features_1)
+            feature_validity[1] = "Join: Feature '"+feature+"' does not exist in the features: "+ str(from_features_1)
+            return
         
         if(not (feature in from_features_2)):
             feature_validity[0] = invalid
-            feature_validity[1] = "Feature '"+feature+"' does not exist in the features: "+ str(from_features_2)
+            feature_validity[1] = "Join: Feature '"+feature+"' does not exist in the features: "+ str(from_features_2)
+            return
 
-        # New dataset will be the below ####################################
-        jobs_anwers_dict[step] = ["join-result"]
+        # Build the join features
+        join_features = []
+        join_features.extend(from_features_1)
+        join_features.extend(from_features_2)
+        join_features.remove(feature)
+
+        # New dataset will be the below
+        jobs_anwers_dict[step] = join_features
         return
     
     if(title == "regression"):
@@ -134,37 +143,40 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, feature_validity):
 
         if(not (feature in from_features)):
             feature_validity[0] = invalid
-            feature_validity[1] = "Feature '"+feature+"' does not exist in the features: "+ str(from_features)
+            feature_validity[1] = "Regression: Feature '"+feature+"' does not exist in the features: "+ str(from_features)
+            return
 
         # New dataset will be the below
-        jobs_anwers_dict[step] = ["regression-result"]
+        jobs_anwers_dict[step] = [feature, "prediction"]
         return
     
-    if(title == "classification"): ####################################
+    if(title == "classification"): 
         # Find if column given is right
         from_features = jobs_anwers_dict[from_step]
         feature = job_json["column"]
 
         if(not (feature in from_features)):
             feature_validity[0] = invalid
-            feature_validity[1] = "Feature '"+feature+"' does not exist in the features: "+ str(from_features)
+            feature_validity[1] = "Classification: Feature '"+feature+"' does not exist in the features: "+ str(from_features)
+            return
+        
         # New dataset will be the below
-
-        jobs_anwers_dict[step] = ["classification-result"]
+        jobs_anwers_dict[step] = [feature, "prediction"]
         return
     
-    if(title == "clustering"): ####################################
+    if(title == "clustering"): ### This code could have changes in the future
         # Find if column given is right
         from_features = jobs_anwers_dict[from_step]
         feature = job_json["column"]
 
         if(not (feature in from_features)):
             feature_validity[0] = invalid
-            feature_validity[1] = "Feature '"+feature+"' does not exist in the features: "+ str(from_features)
+            feature_validity[1] = "Clustering: Feature '"+feature+"' does not exist in the features: "+ str(from_features)
+            return
         # New dataset will be the below
 
         # New dataset will be the below
-        jobs_anwers_dict[step] = ["clustering-result"]
+        jobs_anwers_dict[step] = [feature, "prediction"]
         return
 
     jobs_anwers_dict[step] = jobs_anwers_dict[from_step]

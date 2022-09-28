@@ -1,252 +1,252 @@
 {
-    "diastema-token": "diastema-key",
-    "analysis-id": "039ff558fb558a5",
-    "database-id": "metis",
-    "analysis-datetime": "2021-10-19 02:27:22:137",
-    "jobs": [
-      {
-        "id": 1634599655650,
-        "step": 1,
-        "from": 0,
-        "next": [
-          5
+  "diastema-token": "diastema-key",
+  "analysis-id": "039ff558fb558a5",
+  "database-id": "metis",
+  "analysis-datetime": "2021-10-19 02:27:22:137",
+  "jobs": [
+    {
+      "id": 1634599655650,
+      "step": 1,
+      "from": 0,
+      "next": [
+        5
+      ],
+      "title": "dataset",
+      "label": "ships",
+      "save": false
+    },
+    {
+      "id": 163459965531652,
+      "step": 2,
+      "from": 0,
+      "next": [
+        5
+      ],
+      "title": "dataset",
+      "label": "boats",
+      "save": false
+    },
+    {
+      "id": 16345955632348,
+      "step": 5,
+      "from": [
+        1,
+        2
+      ],
+      "next": [
+        20
+      ],
+      "title": "data-join",
+      "column": "sales",
+      "join-type": "Inner"
+    },
+    {
+      "id": 16345559632387,
+      "step": 20,
+      "from": 5,
+      "next": [
+        6
+      ],
+      "title": "cleaning",
+      "save": false,
+      "max-shrink": 0.2
+    },
+    {
+      "id": 1634595534250,
+      "step": 6,
+      "from": 20,
+      "next": [
+        7,
+        21
+      ],
+      "title": "classification",
+      "algorithm": "logistic regression",
+      "column": "sales",
+      "save": false
+    },
+    {
+      "id": 1634595533250,
+      "step": 7,
+      "from": 6,
+      "next": [
+        0
+      ],
+      "title": "data-sink",
+      "save": false
+    },
+    {
+      "id": 16345559632387,
+      "step": 21,
+      "from": 6,
+      "next": [
+        10
+      ],
+      "title": "cleaning",
+      "save": false,
+      "max-shrink": 0.2
+    },
+    {
+      "id": 1634449655650,
+      "step": 8,
+      "from": 0,
+      "next": [
+        22
+      ],
+      "title": "dataset",
+      "label": "ships",
+      "save": false
+    },
+    {
+      "id": 163459445531652,
+      "step": 9,
+      "from": 0,
+      "next": [
+        23
+      ],
+      "title": "dataset",
+      "label": "boats",
+      "save": false
+    },
+    {
+      "id": 16345559632387,
+      "step": 22,
+      "from": 8,
+      "next": [
+        10
+      ],
+      "title": "cleaning",
+      "save": false,
+      "max-shrink": 0.2
+    },
+    {
+      "id": 16345559632387,
+      "step": 23,
+      "from": 9,
+      "next": [
+        10
+      ],
+      "title": "cleaning",
+      "save": false,
+      "max-shrink": 0.2
+    },
+    {
+      "step": 10,
+      "from": [
+        21,
+        22,
+        23
+      ],
+      "next": [
+        11
+      ],
+      "title": "function",
+      "function": {
+        "name": "Test_Func",
+        "output_type": "float",
+        "args": [
+          {
+            "type": "float",
+            "name": "val_1",
+            "arg_id": 1,
+            "feature": "prediction"
+          },
+          {
+            "type": "float",
+            "name": "val_2",
+            "arg_id": 2,
+            "feature": "sales"
+          },
+          {
+            "type": "float",
+            "name": "val_3",
+            "arg_id": 3,
+            "feature": "sales"
+          }
         ],
-        "title": "dataset",
-        "label": "ships",
-        "save": false
-      },
-      {
-        "id": 163459965531652,
-        "step": 2,
-        "from": 0,
-        "next": [
-          5
-        ],
-        "title": "dataset",
-        "label": "boats",
-        "save": false
-      },
-      {
-        "id": 16345955632348,
-        "step": 5,
-        "from": [
-          1,
-          2
-        ],
-        "next": [
-          20
-        ],
-        "title": "data-join",
-        "column": "ID",
-        "join-type": "Inner"
-      },
-      {
-        "id": 16345559632387,
-        "step": 20,
-        "from": 5,
-        "next": [
-          6
-        ],
-        "title": "cleaning",
-        "save": false,
-        "max-shrink": 0.2
-      },
-      {
-        "id": 1634595534250,
-        "step": 6,
-        "from": 20,
-        "next": [
-          7,
-          21
-        ],
-        "title": "classification",
-        "algorithm": "logistic regression",
-        "column": "ID",
-        "save": false
-      },
-      {
-        "id": 1634595533250,
-        "step": 7,
-        "from": 6,
-        "next": [
-          0
-        ],
-        "title": "data-sink",
-        "save": false
-      },
-      {
-        "id": 16345559632387,
-        "step": 21,
-        "from": 6,
-        "next": [
-          10
-        ],
-        "title": "cleaning",
-        "save": false,
-        "max-shrink": 0.2
-      },
-      {
-        "id": 1634449655650,
-        "step": 8,
-        "from": 0,
-        "next": [
-          22
-        ],
-        "title": "dataset",
-        "label": "ships",
-        "save": false
-      },
-      {
-        "id": 163459445531652,
-        "step": 9,
-        "from": 0,
-        "next": [
-          23
-        ],
-        "title": "dataset",
-        "label": "boats",
-        "save": false
-      },
-      {
-        "id": 16345559632387,
-        "step": 22,
-        "from": 8,
-        "next": [
-          10
-        ],
-        "title": "cleaning",
-        "save": false,
-        "max-shrink": 0.2
-      },
-      {
-        "id": 16345559632387,
-        "step": 23,
-        "from": 9,
-        "next": [
-          10
-        ],
-        "title": "cleaning",
-        "save": false,
-        "max-shrink": 0.2
-      },
-      {
-        "step": 10,
-        "from": [
-          21,
-          22,
-          23
-        ],
-        "next": [
-          11
-        ],
-        "title": "function",
-        "function": {
-          "name": "Test_Func",
-          "output_type": "float",
-          "args": [
-            {
+        "expression": [
+          {
+            "id": "4",
+            "step": 1,
+            "from": 0,
+            "next": 3,
+            "info": {
+              "kind": "arg",
               "type": "float",
               "name": "val_1",
-              "arg_id": 1,
-              "feature": "sales-1"
-            },
-            {
+              "arg_id": 1
+            }
+          },
+          {
+            "id": "5",
+            "step": 2,
+            "from": 0,
+            "next": 3,
+            "info": {
+              "kind": "arg",
               "type": "float",
               "name": "val_2",
-              "arg_id": 2,
-              "feature": "sales-2"
-            },
-            {
+              "arg_id": 2
+            }
+          },
+          {
+            "id": "6",
+            "step": 3,
+            "from": [
+              1,
+              2
+            ],
+            "next": 5,
+            "info": {
+              "kind": "operation",
+              "name": "subtraction"
+            }
+          },
+          {
+            "id": "7",
+            "step": 4,
+            "from": 0,
+            "next": 5,
+            "info": {
+              "kind": "arg",
               "type": "float",
               "name": "val_3",
-              "arg_id": 3,
-              "feature": "sales-3"
+              "arg_id": 3
             }
-          ],
-          "expression": [
-            {
-              "id": "4",
-              "step": 1,
-              "from": 0,
-              "next": 3,
-              "info": {
-                "kind": "arg",
-                "type": "float",
-                "name": "val_1",
-                "arg_id": 1
-              }
-            },
-            {
-              "id": "5",
-              "step": 2,
-              "from": 0,
-              "next": 3,
-              "info": {
-                "kind": "arg",
-                "type": "float",
-                "name": "val_2",
-                "arg_id": 2
-              }
-            },
-            {
-              "id": "6",
-              "step": 3,
-              "from": [
-                1,
-                2
-              ],
-              "next": 5,
-              "info": {
-                "kind": "operation",
-                "name": "subtraction"
-              }
-            },
-            {
-              "id": "7",
-              "step": 4,
-              "from": 0,
-              "next": 5,
-              "info": {
-                "kind": "arg",
-                "type": "float",
-                "name": "val_3",
-                "arg_id": 3
-              }
-            },
-            {
-              "id": "8",
-              "step": 5,
-              "from": [
-                4,
-                3
-              ],
-              "next": 0,
-              "info": {
-                "kind": "operation",
-                "name": "subtraction"
-              }
+          },
+          {
+            "id": "8",
+            "step": 5,
+            "from": [
+              4,
+              3
+            ],
+            "next": 0,
+            "info": {
+              "kind": "operation",
+              "name": "subtraction"
             }
-          ]
-        },
-        "id": 1634599331652,
-        "save": false
+          }
+        ]
       },
-      {
-        "id": 1634595433250,
-        "step": 11,
-        "from": 10,
-        "next": [
-          0
-        ],
-        "title": "data-sink",
-        "save": false
-      }
-    ],
-    "metadata": [
-      "this",
-      "could",
-      "be",
-      "JSON"
-    ],
-    "automodel": false
-  }
+      "id": 1634599331652,
+      "save": false
+    },
+    {
+      "id": 1634595433250,
+      "step": 11,
+      "from": 10,
+      "next": [
+        0
+      ],
+      "title": "data-sink",
+      "save": false
+    }
+  ],
+  "metadata": [
+    "this",
+    "could",
+    "be",
+    "JSON"
+  ],
+  "automodel": false
+}
