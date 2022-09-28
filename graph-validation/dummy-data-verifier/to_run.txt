@@ -1,6 +1,6 @@
 docker build --tag dummy-data-verifier .
 
-docker run -p 127.0.0.1:5000:5000 ^
+docker run -p 127.0.0.1:5001:5000 ^
 --name dummy-data-verifier-service ^
 --restart always ^
 -e HOST=0.0.0.0 ^
