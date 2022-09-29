@@ -91,8 +91,8 @@ The command above will let you in the mongo shell.
 use UIDB
 db.dropDatabase()
 use UIDB
-db.datasets.insert( { "organization": "metis", "user": "panagiotis", "label": "ships", "features" : [ {"name" : "ships-1", "type" : "int", "positive" : "True", "negative" : "False"}, {"name" : "ships-2", "type" : "float", "positive" : "True", "negative" : "False"}, {"name" : "sales", "type" : "bool"} ] } )
-db.datasets.insert( { "organization": "metis", "user": "panagiotis", "label": "boats", "features" : [ {"name" : "boats-1", "type" : "int", "positive" : "True", "negative" : "False"}, {"name" : "boats-2", "type" : "float", "positive" : "True", "negative" : "False"}, {"name" : "sales", "type" : "bool"} ] } )
+db.datasets.insert( { "organization": "metis", "user": "panagiotis", "label": "ships", "features" : [ "ships-1", "ships-2", "ships-3" ] } )
+db.datasets.insert( { "organization": "metis", "user": "panagiotis", "label": "boats", "features" : [ "boats-1", "boats-2", "boats-3" ] } )
 cls
 db.datasets.find()
 
