@@ -14,7 +14,6 @@ needed_attributes = [
         "diastema-token",
         "analysis-id",
         "database-id",
-        "analysis-datetime",
         "jobs",
         "metadata",
         "automodel"

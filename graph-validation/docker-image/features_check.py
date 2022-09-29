@@ -86,7 +86,8 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, feature_validity):
         dataset_comlpex_features = mongo_doc["features"]
         features = []
         for feature in dataset_comlpex_features:
-            features.append(feature["name"])
+            # features.append(feature["name"]) # Feature update
+            features.append(feature)
         jobs_anwers_dict[step] = features
         return
     
