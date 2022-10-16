@@ -5,6 +5,7 @@ import os
 from accessibility_check import access_handler
 from cleaning_check import cleaning_handler
 from features_check import feature_handler
+from connections_check import connections_handler
 
 # Diastema Token Environment Variable
 DIASTEMA_KEY = os.getenv("DIASTEMA_KEY", "diastema-key")
@@ -120,12 +121,21 @@ def playbook_check(playbook):
         print("[ERROR]", error)
         return (invalid, error)
     
+    # Check all the outputs and inputs of the nodes
+    connection_validation = connections_handler(playbook)
+    if(connection_validation[0] == invalid):
+        error = connection_validation[1]
+        print("[ERROR]", error)
+        return (invalid, error)
+
     # Use MongoDB to find if the features are making sence
     feature_validation = feature_handler(playbook)
     if(feature_validation[0] == invalid):
         error = feature_validation[1]
         print("[ERROR]", error)
         return (invalid, error)
+
+    
 
     # Check for cleaning issues
     # not clean --> Join --> not clean
