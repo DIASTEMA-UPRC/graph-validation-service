@@ -6,7 +6,7 @@ existing_jobs = [
         "classification",
         "regression",
         "clustering",
-        "visualize",
+        "visualization",
         "function",
         "data-sink"
     ]

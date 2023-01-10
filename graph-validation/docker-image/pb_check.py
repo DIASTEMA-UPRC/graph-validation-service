@@ -28,7 +28,7 @@ existing_jobs = [
         "classification",
         "regression",
         "clustering",
-        "visualize",
+        "visualization",
         "function",
         "data-sink"
     ]
@@ -42,7 +42,7 @@ allowed_starting_jobs = [
 # Jobs that are allowed to end the playbook
 allowed_ending_jobs = [
     "data-sink",
-    "visualize"
+    "visualization"
 ]
 
 # Variables for graph validation results

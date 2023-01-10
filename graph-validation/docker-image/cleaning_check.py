@@ -12,7 +12,8 @@ jobs_with_cleaning = [
     "classification",
     "regression",
     "clustering",
-    "function"
+    "function",
+    "visualization"
 ]
 
 # Jobs that need dirty datasets
@@ -149,7 +150,7 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, cleaning_validity):
             if(jobs_anwers_dict[from_step] == not_cleaned):
                 jobs_anwers_dict[step] = jobs_anwers_dict[from_step]
                 cleaning_validity[0] = invalid
-                cleaning_validity[1] = "To use a analytics, cleaned data are mandatory."
+                cleaning_validity[1] = "To use analytics and visualizations, cleaned data are mandatory."
                 return
             # If the above are ok then mark as cleaned
             jobs_anwers_dict[step] = cleaned

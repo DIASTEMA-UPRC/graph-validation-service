@@ -7,7 +7,8 @@ one_input_jobs = [
     "cleaning",
     "regression",
     "classification",
-    "clustering"
+    "clustering",
+    "visualization"
 ]
 
 # Cleaning check Handler

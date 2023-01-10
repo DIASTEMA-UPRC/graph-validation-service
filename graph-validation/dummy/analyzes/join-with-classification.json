@@ -34,7 +34,7 @@
         10
       ],
       "title": "data-join",
-      "column": "sales",
+      "column": "boats-1",
       "join-type": "Inner"
     },
     {
@@ -53,11 +53,11 @@
       "step": 6,
       "from": 10,
       "next": [
-        7
+        7, 8
       ],
       "title": "classification",
       "algorithm" : "logistic regression",
-      "column" : "sales",
+      "column" : "boats-1",
       "save": false
     },
     {
@@ -68,6 +68,17 @@
         0
       ],
       "title": "data-sink",
+      "save": false
+    },
+    {
+      "id": 16333599633250,
+      "step": 8,
+      "from": 6,
+      "next": [
+        0
+      ],
+      "title": "visualization",
+      "label" : "viz-2",
       "save": false
     }
   ],

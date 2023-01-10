@@ -37,7 +37,7 @@
         20
       ],
       "title": "data-join",
-      "column": "sales",
+      "column": "boats-1",
       "join-type": "Inner"
     },
     {
@@ -61,7 +61,7 @@
       ],
       "title": "classification",
       "algorithm": "logistic regression",
-      "column": "sales",
+      "column": "boats-1",
       "save": false
     },
     {
@@ -148,19 +148,19 @@
             "type": "float",
             "name": "val_1",
             "arg_id": 1,
-            "feature": "prediction"
+            "feature": "boats-1"
           },
           {
             "type": "float",
             "name": "val_2",
             "arg_id": 2,
-            "feature": "sales"
+            "feature": "boats-1"
           },
           {
             "type": "float",
             "name": "val_3",
             "arg_id": 3,
-            "feature": "sales"
+            "feature": "boats-3"
           }
         ],
         "expression": [
