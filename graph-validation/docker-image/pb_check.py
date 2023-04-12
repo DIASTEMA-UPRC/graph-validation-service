@@ -16,8 +16,7 @@ needed_attributes = [
         "analysis-id",
         "database-id",
         "jobs",
-        "metadata",
-        "automodel"
+        "metadata"
     ]
 
 # All the existing jobs for Diastema
