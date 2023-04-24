@@ -166,6 +166,8 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, feature_validity):
         return
     
     if(title == "clustering"): ### This code could have changes in the future
+
+        """
         # Find if column given is right
         from_features = jobs_anwers_dict[from_step]
         feature = job_json["column"]
@@ -175,9 +177,14 @@ def job_requestor(job_json, jobs_anwers_dict, playbook, feature_validity):
             feature_validity[1] = "Clustering: Feature '"+feature+"' does not exist in the features: "+ str(from_features)
             return
         # New dataset will be the below
+        """
 
         # New dataset will be the below
-        jobs_anwers_dict[step] = [feature, "prediction"]
+        ### THIS MUST HAVE THE END RESULTS
+        from_features = jobs_anwers_dict[from_step]
+        from_features.append("prediction")
+        jobs_anwers_dict[step] = from_features
+        # jobs_anwers_dict[step] = [feature, "prediction"]
         return
 
     jobs_anwers_dict[step] = jobs_anwers_dict[from_step]
